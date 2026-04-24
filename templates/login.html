@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Auth System{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        
+        <h1 class="auth-title">Welcome Back 👋</h1>
+        <p class="auth-subtitle">Login to continue</p>
+
+        <!-- Flash Messages (Flask) -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username"
+                    required
+                >
+            </div>
+
+            <div class="form-group password-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+
+        <p class="auth-footer">
+            Don’t have an account? 
+            <a href="{{ url_for('signup') }}">Sign up</a>
+        </p>
+
+    </div>
+</div>
+
+<!-- JS for Show/Hide Password -->
+<script>
+function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+}
+</script>
+
+{% endblock %}
